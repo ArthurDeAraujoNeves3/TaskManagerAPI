@@ -10,13 +10,24 @@ public class CreateUserUseCase {
     @Autowired
     private UserRepository repository;
 
+    private String formatUsername(String name) {
+        String[] nameParts = name.trim().toLowerCase().split("\\s");
+
+        int length = nameParts.length;
+
+        if ( length == 1 ) {
+            return nameParts[0];
+        };
+
+        return nameParts[0] + "." + nameParts[length - 1];
+    }
+
     public UserEntity createUser(UserEntity body) {
         // Verificar se usuario ja existe (usernmae / email)
 
         // Criptografar senha
 
-        String username = body.getName().toLowerCase().replaceAll("\\s", ".");
-        body.setUsername(username);
+        body.setUsername(this.formatUsername(body.getName()));
 
         return this.repository.save(body);
     }
