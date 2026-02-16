@@ -17,7 +17,7 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<Object> create(@Valid @RequestBody UserEntity body) {
         try {
-            UserEntity user = createUserUseCase.createUser(body);
+            UserEntity user = createUserUseCase.execute(body);
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
