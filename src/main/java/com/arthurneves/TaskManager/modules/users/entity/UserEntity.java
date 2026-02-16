@@ -22,12 +22,13 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank
     @Pattern(regexp = "\\S+", message = "username não pode conter espaços")
     private String username;
     private String name;
+
     @Email
     private String email;
+
     @Length(min = 10, max = 72)
     private String password;
 
