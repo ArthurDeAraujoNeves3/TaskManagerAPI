@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
+
 @Service
 public class LoginUseCase {
     @Value("${security.token}")
@@ -38,6 +41,7 @@ public class LoginUseCase {
         // Gerando JWT
         Algorithm algorith = Algorithm.HMAC256(secret); // Criptografia do token
         String token = JWT.create().withIssuer("Arthur A.") // issuer -> emissor
+                .withExpiresAt(Instant.now().plus(Duration.ofHours(1))) // Duracao de 1 hora
                 .withSubject(user.getId().toString()) // id do dono do token
                 .sign(algorith); // Passando algoritmo
 
