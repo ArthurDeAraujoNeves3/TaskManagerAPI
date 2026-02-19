@@ -23,10 +23,10 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         SecurityContextHolder.getContext().setAuthentication(null);
-        String header = request.getHeader("Authorization");
+        String token = request.getHeader("Authorization");
 
-        if (header != null) {
-            String payload = jwtProvider.validateToken(header);
+        if (token != null) {
+            String payload = jwtProvider.validateToken(token);
 
             // Authorization vazio
             if (payload.isEmpty()) {
