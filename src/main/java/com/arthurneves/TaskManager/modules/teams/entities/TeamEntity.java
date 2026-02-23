@@ -23,7 +23,6 @@ public class TeamEntity {
     @NotBlank
     private String name;
 
-    @NotBlank
     private UUID owner;
 
     @Length(min = 0, max = 72)
