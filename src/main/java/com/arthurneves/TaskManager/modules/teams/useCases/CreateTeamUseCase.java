@@ -20,16 +20,16 @@ public class CreateTeamUseCase {
     private JWTProvider jwtProvider;
 
     public TeamEntity execute(TeamEntity data, String token) {
-        UUID id = UUID.fromString(jwtProvider.validateToken(token));
+        final UUID userId = UUID.fromString(jwtProvider.validateToken(token));
 
-        List<TeamEntity> userTeams = this.repository.findAllByOwner(id);
+        List<TeamEntity> userTeams = this.repository.findAllByOwner(userId);
         userTeams.forEach(team -> {
             if (Objects.equals(team.getName(), data.getName())) {
                 throw new SameTeamName();
             };
         });
 
-        data.setOwner(id);
+        data.setOwner(userId);
         this.repository.save(data);
 
         return data;
