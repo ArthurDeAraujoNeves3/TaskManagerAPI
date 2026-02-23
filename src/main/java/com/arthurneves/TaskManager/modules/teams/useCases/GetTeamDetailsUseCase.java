@@ -9,11 +9,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class GetTeamDetails {
+public class GetTeamDetailsUseCase {
     @Autowired
     private TeamRepository repository;
 
     public Optional<TeamEntity> execute(String teamId) {
+        // So pode pegar os detalhes se estiver associado aquela tarefa
         return this.repository.findById(UUID.fromString(teamId));
     }
 }

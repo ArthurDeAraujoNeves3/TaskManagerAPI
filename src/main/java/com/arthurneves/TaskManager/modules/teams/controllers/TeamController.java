@@ -2,8 +2,9 @@ package com.arthurneves.TaskManager.modules.teams.controllers;
 
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
 import com.arthurneves.TaskManager.modules.teams.useCases.CreateTeamUseCase;
-import com.arthurneves.TaskManager.modules.teams.useCases.GetAllUserTeams;
-import com.arthurneves.TaskManager.modules.teams.useCases.GetTeamDetails;
+import com.arthurneves.TaskManager.modules.teams.useCases.DeleteTeamUseCase;
+import com.arthurneves.TaskManager.modules.teams.useCases.GetAllUserTeamsUseCase;
+import com.arthurneves.TaskManager.modules.teams.useCases.GetTeamDetailsUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,23 @@ public class TeamController {
     private CreateTeamUseCase createTeamUseCase;
 
     @Autowired
-    private GetAllUserTeams getAllUserTeams;
+    private GetAllUserTeamsUseCase getAllUserTeams;
 
     @Autowired
-    private GetTeamDetails getTeamDetails;
+    private GetTeamDetailsUseCase getTeamDetails;
+
+    @Autowired
+    private DeleteTeamUseCase deleteTeamUseCase;
+
+    @DeleteMapping("/delete/{id}")
+    private ResponseEntity<Object> deleteTeam(@RequestHeader("Authorization") String token, @PathVariable String id) {
+        try {
+            this.deleteTeamUseCase.execute(token, id);
+            return ResponseEntity.ok().body("Time deletado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    };
 
     @GetMapping("/details/{id}")
     private ResponseEntity<Object> getTeamDetails(@PathVariable String id) {

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class GetAllUserTeams {
+public class GetAllUserTeamsUseCase {
     @Autowired
     private JWTProvider jwtProvider;
 
