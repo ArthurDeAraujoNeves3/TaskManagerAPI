@@ -1,9 +1,7 @@
 package com.arthurneves.TaskManager.modules.teams.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,8 +21,6 @@ public class TeamEntity {
     @NotBlank
     private String name;
 
-    private UUID owner;
-
     @Length(min = 0, max = 72)
     private String description;
 
@@ -33,4 +29,10 @@ public class TeamEntity {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    private UUID owner;
+
+    @ManyToOne()
+    @JoinColumn(name = "owner", insertable = false, updatable = false)
+    private UserEntity userEntity;
 }

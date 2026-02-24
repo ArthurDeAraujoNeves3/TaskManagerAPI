@@ -22,12 +22,11 @@ public class CreateTeamUseCase {
     public TeamEntity execute(TeamEntity data, String token) {
         final UUID userId = UUID.fromString(jwtProvider.validateToken(token));
 
-        List<TeamEntity> userTeams = this.repository.findAllByOwner(userId);
-        userTeams.forEach(team -> {
-            if (Objects.equals(team.getName(), data.getName())) {
-                throw new SameTeamName();
-            };
-        });
+        List<TeamEntity> teamWithTheSameName = this.repository.findByOwnerAndName(userId, data.getName());
+
+        if (!teamWithTheSameName.isEmpty()) {
+            throw new SameTeamName();
+        }
 
         data.setOwner(userId);
         this.repository.save(data);
