@@ -1,10 +1,8 @@
 package com.arthurneves.TaskManager.modules.teams.controllers;
 
+import com.arthurneves.TaskManager.modules.teams.dto.TeamUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
-import com.arthurneves.TaskManager.modules.teams.useCases.CreateTeamUseCase;
-import com.arthurneves.TaskManager.modules.teams.useCases.DeleteTeamUseCase;
-import com.arthurneves.TaskManager.modules.teams.useCases.GetAllUserTeamsUseCase;
-import com.arthurneves.TaskManager.modules.teams.useCases.GetTeamDetailsUseCase;
+import com.arthurneves.TaskManager.modules.teams.useCases.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequestMapping("/teams")
 @RestController
@@ -28,25 +27,8 @@ public class TeamController {
     @Autowired
     private DeleteTeamUseCase deleteTeamUseCase;
 
-    @DeleteMapping("/delete/{id}")
-    private ResponseEntity<Object> deleteTeam(@RequestHeader("Authorization") String token, @PathVariable String id) {
-        try {
-            this.deleteTeamUseCase.execute(token, id);
-            return ResponseEntity.ok().body("Time deletado com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    };
-
-    @GetMapping("/details/{id}")
-    private ResponseEntity<Object> getTeamDetails(@PathVariable String id) {
-        try {
-            Optional<TeamEntity> team = this.getTeamDetails.execute(id);
-            return ResponseEntity.ok().body(team);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+    @Autowired
+    private UpdateTeamUseCase updateTeamUseCase;
 
     @GetMapping("/all")
     public ResponseEntity<Object> all(@RequestHeader("Authorization") String token) {
@@ -67,4 +49,34 @@ public class TeamController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/details/{id}")
+    private ResponseEntity<Object> getTeamDetails(@PathVariable String id) {
+        try {
+            Optional<TeamEntity> team = this.getTeamDetails.execute(id);
+            return ResponseEntity.ok().body(team);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    private ResponseEntity<Object> updateTeam(@RequestBody TeamUpdateRequestDTO data, @PathVariable String id) {
+        try {
+            TeamUpdateRequestDTO result = this.updateTeamUseCase.execute(data, UUID.fromString(id));
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    private ResponseEntity<Object> deleteTeam(@RequestHeader("Authorization") String token, @PathVariable String id) {
+        try {
+            this.deleteTeamUseCase.execute(token, id);
+            return ResponseEntity.ok().body("Time deletado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    };
 }
