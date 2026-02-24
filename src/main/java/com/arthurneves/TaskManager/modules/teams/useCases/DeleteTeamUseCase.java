@@ -27,7 +27,7 @@ public class DeleteTeamUseCase {
             throw new TeamNotFound();
         }
 
-        UUID teamOwner = team.get().getOwner();
+        UUID teamOwner = team.get().getOwnerId();
         if (!teamOwner.equals(id)) {
             throw new NotTeamOwner();
         }

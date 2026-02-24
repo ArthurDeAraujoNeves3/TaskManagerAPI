@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface TeamRepository extends JpaRepository<TeamEntity, UUID> {
-    List<TeamEntity> findAllByOwner(UUID owner);
-    List<TeamEntity> findByOwnerAndName(UUID owner, String name);
+    List<TeamEntity> findAllByOwnerId(UUID ownerId);
+    List<TeamEntity> findByOwnerIdAndName(UUID ownerId, String name);
 }

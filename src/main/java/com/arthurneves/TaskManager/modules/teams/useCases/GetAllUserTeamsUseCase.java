@@ -19,6 +19,6 @@ public class GetAllUserTeamsUseCase {
 
     public List<TeamEntity> execute(String token) {
         final UUID userId = UUID.fromString(jwtProvider.validateToken(token));
-        return this.repository.findAllByOwner(userId);
+        return this.repository.findAllByOwnerId(userId);
     }
 }

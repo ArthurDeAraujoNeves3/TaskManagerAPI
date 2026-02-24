@@ -30,9 +30,9 @@ public class TeamEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private UUID owner;
+    private UUID ownerId;
 
     @ManyToOne()
-    @JoinColumn(name = "owner", insertable = false, updatable = false)
-    private UserEntity userEntity;
+    @JoinColumn(name = "ownerId", insertable = false, updatable = false)
+    private UserEntity owner;
 }
