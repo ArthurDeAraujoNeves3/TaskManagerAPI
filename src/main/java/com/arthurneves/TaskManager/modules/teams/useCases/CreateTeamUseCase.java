@@ -27,6 +27,7 @@ public class CreateTeamUseCase {
         }
 
         data.setOwnerId(userId);
+        System.out.println(data);
         this.repository.save(data);
 
         return data;

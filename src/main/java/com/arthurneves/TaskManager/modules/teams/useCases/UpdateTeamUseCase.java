@@ -28,6 +28,7 @@ public class UpdateTeamUseCase {
                 .id(teamId)
                 .name(data.getName() != null ? data.getName() : teamEntity.getName())
                 .description(data.getDescription() != null ? data.getDescription() : teamEntity.getDescription())
+                .ownerId(teamEntity.getOwnerId())
                 .build();
 
         this.repository.save(entity);
