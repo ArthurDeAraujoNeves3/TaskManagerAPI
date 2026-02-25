@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,9 +21,9 @@ public class CreateTeamUseCase {
     public TeamEntity execute(TeamEntity data, String token) {
         final UUID userId = UUID.fromString(jwtProvider.validateToken(token));
 
-        List<TeamEntity> teamWithTheSameName = this.repository.findByOwnerIdAndName(userId, data.getName());
+        Optional<TeamEntity> teamWithTheSameName = this.repository.findByOwnerIdAndName(userId, data.getName());
 
-        if (!teamWithTheSameName.isEmpty()) {
+        if (teamWithTheSameName.isPresent()) {
             throw new SameTeamName();
         }
 

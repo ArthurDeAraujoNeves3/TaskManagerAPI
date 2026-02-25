@@ -61,9 +61,9 @@ public class TeamController {
     }
 
     @PutMapping("/update/{id}")
-    private ResponseEntity<Object> updateTeam(@RequestBody TeamUpdateRequestDTO data, @PathVariable String id) {
+    private ResponseEntity<Object> updateTeam(@RequestHeader("Authorization") String token, @RequestBody TeamUpdateRequestDTO data, @PathVariable String id) {
         try {
-            TeamUpdateRequestDTO result = this.updateTeamUseCase.execute(data, UUID.fromString(id));
+            TeamUpdateRequestDTO result = this.updateTeamUseCase.execute(token, data, UUID.fromString(id));
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
