@@ -1,11 +1,12 @@
 package com.arthurneves.TaskManager.modules.teams.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
@@ -15,6 +16,9 @@ import java.util.UUID;
 
 @Data
 @Entity(name = "Teams")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeamEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,9 +26,6 @@ public class TeamEntity {
 
     @NotBlank
     private String name;
-
-    @NotBlank
-    private UUID owner;
 
     @Length(min = 0, max = 72)
     private String description;
@@ -34,4 +35,10 @@ public class TeamEntity {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    private UUID ownerId;
+
+    @ManyToOne()
+    @JoinColumn(name = "ownerId", insertable = false, updatable = false)
+    private UserEntity owner;
 }

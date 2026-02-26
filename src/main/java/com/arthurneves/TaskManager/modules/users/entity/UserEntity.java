@@ -1,15 +1,14 @@
 package com.arthurneves.TaskManager.modules.users.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.mapping.List;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,6 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank
     @Pattern(regexp = "\\S+", message = "username não pode conter espaços")
     private String username;
     private String name;

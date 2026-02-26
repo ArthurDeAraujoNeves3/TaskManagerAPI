@@ -1,0 +1,23 @@
+meta {
+  name: update
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{BASE_URL}}/teams/update/dd62634a-13fd-4021-9844-ce8c2fef43de
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Soror NOme Alterado",
+    "description": "Timeee formado pelos habitantes de Betelgeuse"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
