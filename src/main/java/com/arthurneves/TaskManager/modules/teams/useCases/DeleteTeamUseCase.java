@@ -2,6 +2,7 @@ package com.arthurneves.TaskManager.modules.teams.useCases;
 
 import com.arthurneves.TaskManager.exceptions.NotTeamOwner;
 import com.arthurneves.TaskManager.exceptions.TeamNotFound;
+import com.arthurneves.TaskManager.modules.teams.dto.TeamDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
 import com.arthurneves.TaskManager.modules.teams.repositories.TeamRepository;
 import com.arthurneves.TaskManager.providers.JWTProvider;

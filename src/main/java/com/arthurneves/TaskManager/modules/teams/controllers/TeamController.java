@@ -1,5 +1,6 @@
 package com.arthurneves.TaskManager.modules.teams.controllers;
 
+import com.arthurneves.TaskManager.modules.teams.dto.TeamDTO;
 import com.arthurneves.TaskManager.modules.teams.dto.TeamUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
 import com.arthurneves.TaskManager.modules.teams.useCases.*;
@@ -33,7 +34,7 @@ public class TeamController {
     @GetMapping("/all")
     public ResponseEntity<Object> all(@RequestHeader("Authorization") String token) {
         try {
-            List<TeamEntity> teams = this.getAllUserTeams.execute(token);
+            List<TeamDTO> teams = this.getAllUserTeams.execute(token);
             return ResponseEntity.ok().body(teams);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -53,7 +54,7 @@ public class TeamController {
     @GetMapping("/details/{id}")
     private ResponseEntity<Object> getTeamDetails(@PathVariable String id) {
         try {
-            Optional<TeamEntity> team = this.getTeamDetails.execute(id);
+            List<TeamDTO> team = this.getTeamDetails.execute(id);
             return ResponseEntity.ok().body(team);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
