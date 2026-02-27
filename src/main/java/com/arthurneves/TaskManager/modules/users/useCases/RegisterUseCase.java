@@ -3,6 +3,7 @@ package com.arthurneves.TaskManager.modules.users.useCases;
 import com.arthurneves.TaskManager.exceptions.UserFoundException;
 import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
 import com.arthurneves.TaskManager.modules.users.repositories.UserRepository;
+import com.arthurneves.TaskManager.utils.CreateUserUsername;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,21 +16,9 @@ public class RegisterUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private String formatUsername(String name) {
-        String[] nameParts = name.trim().toLowerCase().split("\\s");
-
-        int length = nameParts.length;
-
-        if (length == 1) {
-            return nameParts[0];
-        }
-
-        return nameParts[0] + "." + nameParts[length - 1];
-    }
-
     public UserEntity execute(UserEntity data) {
         // Criando username
-        data.setUsername(this.formatUsername(data.getName()));
+        data.setUsername(CreateUserUsername.format(data.getName()));
 
         // Email ou username ja cadastrados
         this.repository.findByUsernameOrEmail(data.getUsername(), data.getEmail()).ifPresent(user -> {
