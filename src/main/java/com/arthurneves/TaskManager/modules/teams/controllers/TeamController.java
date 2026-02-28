@@ -18,16 +18,12 @@ import java.util.UUID;
 public class TeamController {
     @Autowired
     private CreateTeamUseCase createTeamUseCase;
-
     @Autowired
     private GetAllUserTeamsUseCase getAllUserTeams;
-
     @Autowired
     private GetTeamDetailsUseCase getTeamDetails;
-
     @Autowired
     private DeleteTeamUseCase deleteTeamUseCase;
-
     @Autowired
     private UpdateTeamUseCase updateTeamUseCase;
 
