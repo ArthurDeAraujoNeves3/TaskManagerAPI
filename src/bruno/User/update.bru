@@ -1,19 +1,19 @@
 meta {
-  name: login
+  name: update
   type: http
   seq: 2
 }
 
-post {
-  url: {{BASE_URL}}/auth/login
+put {
+  url: {{BASE_URL}}/users/update
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "email": "ulyssemerou@gmail",
-    "password":  {{PASSWORD}}
+    "name": "Cornelius Zira",
+    "email": "ulyssemerou@gmail"
   }
 }
 
