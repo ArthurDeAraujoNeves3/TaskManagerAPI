@@ -1,5 +1,6 @@
 package com.arthurneves.TaskManager.modules.teams.controllers;
 
+import com.arthurneves.TaskManager.modules.teams.dto.AddMemberRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.dto.TeamDTO;
 import com.arthurneves.TaskManager.modules.teams.dto.TeamUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
@@ -17,6 +18,8 @@ import java.util.UUID;
 @RestController
 public class TeamController {
     @Autowired
+    private AddMemberUseCase addMemberUseCase;
+    @Autowired
     private CreateTeamUseCase createTeamUseCase;
     @Autowired
     private GetAllUserTeamsUseCase getAllUserTeams;
@@ -26,6 +29,16 @@ public class TeamController {
     private DeleteTeamUseCase deleteTeamUseCase;
     @Autowired
     private UpdateTeamUseCase updateTeamUseCase;
+
+    @PostMapping("/addMember")
+    public ResponseEntity<Object> addMoreMembersInTeam(@RequestHeader("Authorization") String token, @Valid @RequestBody AddMemberRequestDTO data) {
+        try {
+            this.addMemberUseCase.execute(token, data);
+            return ResponseEntity.ok().body("Membro adicionado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @GetMapping("/all")
     public ResponseEntity<Object> all(@RequestHeader("Authorization") String token) {

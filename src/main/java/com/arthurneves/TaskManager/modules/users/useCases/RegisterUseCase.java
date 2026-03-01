@@ -16,7 +16,7 @@ public class RegisterUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserEntity execute(UserEntity data) {
+    public void execute(UserEntity data) {
         // Criando username
         data.setUsername(CreateUserUsername.format(data.getName()));
 
@@ -29,6 +29,6 @@ public class RegisterUseCase {
         String encryptedPassword = passwordEncoder.encode(data.getPassword());
         data.setPassword(encryptedPassword);
 
-        return this.repository.save(data);
+        this.repository.save(data);
     }
 }

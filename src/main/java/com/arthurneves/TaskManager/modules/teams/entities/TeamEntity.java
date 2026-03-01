@@ -12,7 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @Entity(name = "Teams")
@@ -36,9 +36,13 @@ public class TeamEntity {
     @JoinColumn(name = "ownerId", insertable = false, updatable = false)
     private UserEntity owner;
 
-    @ManyToOne()
-    @JoinColumn(name = "id", insertable = false, updatable = false)
-    private UserEntity members;
+    @ManyToMany()
+    @JoinTable(
+            name = "team_members",
+            joinColumns = @JoinColumn(name = "teamId"),
+            inverseJoinColumns = @JoinColumn(name = "userId")
+    )
+    private Set<UserEntity> members = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
