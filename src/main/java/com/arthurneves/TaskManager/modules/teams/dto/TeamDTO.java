@@ -16,5 +16,5 @@ public interface TeamDTO {
     LocalDateTime getUpdatedAt();
     UUID getOwnerId();
     UserRelationDTO getOwner();
-    UserRelationDTO getMembers();
+    List<UserRelationDTO> getMembers();
 }

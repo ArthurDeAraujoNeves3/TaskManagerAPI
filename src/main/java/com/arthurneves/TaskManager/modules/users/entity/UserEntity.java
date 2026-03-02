@@ -1,6 +1,7 @@
 package com.arthurneves.TaskManager.modules.users.entity;
 
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -39,9 +40,9 @@ public class UserEntity {
     @Length(min = 10, max = 72)
     private String password;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "members")
-    private Set<TeamEntity> teams = new HashSet<>();
+    @JsonBackReference
+    private List<TeamEntity> teams;
 
     @CreationTimestamp
     private LocalDateTime create_at;

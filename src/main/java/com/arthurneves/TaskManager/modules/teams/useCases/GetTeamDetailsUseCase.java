@@ -17,6 +17,6 @@ public class GetTeamDetailsUseCase {
 
     public List<TeamDTO> execute(String teamId) {
         // So pode pegar os detalhes se estiver associado aquela tarefa
-        return this.repository.findTeamById(UUID.fromString(teamId));
+        return this.repository.findTeaaamById(UUID.fromString(teamId));
     }
 }

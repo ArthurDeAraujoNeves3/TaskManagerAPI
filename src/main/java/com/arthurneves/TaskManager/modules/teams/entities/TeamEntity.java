@@ -1,6 +1,7 @@
 package com.arthurneves.TaskManager.modules.teams.entities;
 
 import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -42,7 +43,8 @@ public class TeamEntity {
             joinColumns = @JoinColumn(name = "teamId"),
             inverseJoinColumns = @JoinColumn(name = "userId")
     )
-    private Set<UserEntity> members = new HashSet<>();
+    @JsonManagedReference
+    private List<UserEntity> members;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

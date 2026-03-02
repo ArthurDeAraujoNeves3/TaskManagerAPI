@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public interface TeamRepository extends JpaRepository<TeamEntity, UUID> {
     List<TeamDTO> findTeamById(UUID id);
+    List<TeamDTO> findTeaaamById(UUID id);
 
     List<TeamDTO> findAllByOwnerId(UUID ownerId);
     Optional<TeamEntity> findByOwnerIdAndName(UUID ownerId, String name);
