@@ -24,8 +24,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody UserEntity body) {
         try {
-            UserEntity user = registerUseCase.execute(body);
-            return ResponseEntity.ok().body(user);
+            this.registerUseCase.execute(body);
+            return ResponseEntity.ok().body("Usuário criado com sucesso!");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

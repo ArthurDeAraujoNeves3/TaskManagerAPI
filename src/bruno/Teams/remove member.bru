@@ -1,0 +1,23 @@
+meta {
+  name: remove member
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{BASE_URL}}/teams/removeMember
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "cornelius@gmail.com",
+    "teamId": "471111ff-d4f6-46dc-aced-584a1d451180"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

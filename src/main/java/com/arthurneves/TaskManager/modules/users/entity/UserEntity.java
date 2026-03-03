@@ -1,6 +1,8 @@
 package com.arthurneves.TaskManager.modules.users.entity;
 
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,11 +13,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.mapping.List;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @Entity(name = "Users")
@@ -38,6 +39,10 @@ public class UserEntity {
     @NotBlank
     @Length(min = 10, max = 72)
     private String password;
+
+    @ManyToMany(mappedBy = "members")
+    @JsonBackReference
+    private List<TeamEntity> teams;
 
     @CreationTimestamp
     private LocalDateTime create_at;

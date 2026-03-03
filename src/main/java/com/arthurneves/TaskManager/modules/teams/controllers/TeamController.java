@@ -1,5 +1,6 @@
 package com.arthurneves.TaskManager.modules.teams.controllers;
 
+import com.arthurneves.TaskManager.modules.teams.dto.TeamMemberRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.dto.TeamDTO;
 import com.arthurneves.TaskManager.modules.teams.dto.TeamUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequestMapping("/teams")
@@ -18,16 +18,12 @@ import java.util.UUID;
 public class TeamController {
     @Autowired
     private CreateTeamUseCase createTeamUseCase;
-
     @Autowired
     private GetAllUserTeamsUseCase getAllUserTeams;
-
     @Autowired
     private GetTeamDetailsUseCase getTeamDetails;
-
     @Autowired
     private DeleteTeamUseCase deleteTeamUseCase;
-
     @Autowired
     private UpdateTeamUseCase updateTeamUseCase;
 

@@ -24,7 +24,6 @@ public class ResetPasswordUseCase {
 
     public void execute(String token, UserResetPasswordRequestDTO data) {
         UUID id = UUID.fromString(this.jwtProvider.validateToken(token));
-
         Optional<UserEntity> user = this.repository.findById(id);
 
         if ( user.isEmpty() ) {
@@ -42,7 +41,7 @@ public class ResetPasswordUseCase {
                 .username(userEntity.getUsername())
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
-                .password(data.getNewPassword())
+                .password(passwordEncoder.encode(data.getNewPassword()))
                 .build();
 
         this.repository.save(updatedUser);
