@@ -24,33 +24,45 @@ public class AddMemberUseCase {
     private TeamRepository teamRepository;
     @Autowired
     private JWTProvider jwtProvider;
-    
-    public void execute(String token, TeamMemberRequestDTO data) {
-        UUID id = UUID.fromString(this.jwtProvider.validateToken(token));
 
-        Optional<TeamEntity> team = this.teamRepository.findById(UUID.fromString(data.getTeamId()));
+    protected TeamEntity teamExists(UUID teamId) {
+        Optional<TeamEntity> team = this.teamRepository.findById(teamId);
         if (team.isEmpty()) {
             throw new TeamNotFound();
         }
 
-        Optional<UserEntity> user = this.userRepository.findByEmail(data.getEmail());
+        return team.get();
+    }
+
+    protected UserEntity userExists(String email) {
+        Optional<UserEntity> user = this.userRepository.findByEmail(email);
         if (user.isEmpty()) {
             throw new UserNotFound();
         }
 
-        // Usuário é o dono
-        if (!team.get().getOwnerId().equals(id)) {
+        return user.get();
+    }
+
+    protected void userIsTheOwner(TeamEntity team, UUID userId) {
+        if (!team.getOwnerId().equals(userId)) {
             throw new NotTeamOwner();
         }
+    }
 
-        TeamEntity teamEntity = team.get();
-        UserEntity userEntity = user.get();
+    public void execute(String token, TeamMemberRequestDTO data) {
+        UUID id = UUID.fromString(this.jwtProvider.validateToken(token));
 
+        // Validacoes
+        TeamEntity teamEntity = this.teamExists(UUID.fromString(data.getTeamId()));
+        UserEntity userEntity = this.userExists(data.getEmail());
+        this.userIsTheOwner(teamEntity, id);
+
+        // Usuario ja esta no time
         if (teamEntity.getMembers().contains(userEntity)) {
             throw new UserAlreadyOnTeam();
-        };
+        }
 
-        teamEntity.getMembers().add(user.get());
+        teamEntity.getMembers().add(userEntity);
         this.teamRepository.save(teamEntity);
     }
 }
