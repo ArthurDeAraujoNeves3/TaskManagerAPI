@@ -37,6 +37,9 @@ public class TeamEntity {
     @JoinColumn(name = "ownerId", insertable = false, updatable = false)
     private UserEntity owner;
 
+    @OneToMany(mappedBy = "team")
+    private List<ColumnEntity> columns;
+
     @ManyToMany()
     @JoinTable(
             name = "team_members",
