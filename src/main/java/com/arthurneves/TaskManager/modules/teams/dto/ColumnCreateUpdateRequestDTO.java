@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ColumnCreateRequestDTO {
+public class ColumnCreateUpdateRequestDTO {
     private String name;
     private UUID teamId;
     private Byte order;

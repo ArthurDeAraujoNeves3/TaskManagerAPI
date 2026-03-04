@@ -1,7 +1,7 @@
 package com.arthurneves.TaskManager.modules.teams.useCases.Column;
 
 import com.arthurneves.TaskManager.exceptions.UserNotFound;
-import com.arthurneves.TaskManager.modules.teams.dto.ColumnCreateRequestDTO;
+import com.arthurneves.TaskManager.modules.teams.dto.ColumnCreateUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.ColumnEntity;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
 import com.arthurneves.TaskManager.modules.teams.repositories.ColumnRepository;
@@ -28,20 +28,28 @@ public class CreateTeamColumnUseCase {
     @Autowired
     private GetUserIdFromJWToken getUserIdFromJWToken;
 
-    public void execute(String token, ColumnCreateRequestDTO data) {
-        UUID id = this.getUserIdFromJWToken.get(token);
-
-        TeamEntity teamEntity = addMemberUseCase.teamExists(data.getTeamId());
+    public void userExists(UUID id) {
         Optional<UserEntity> user = this.userRepository.findById(id);
-
         if (user.isEmpty()) {
             throw new UserNotFound();
         }
+    }
 
-        Optional<ColumnEntity> orderInTable = this.columnRepository.findByColumnOrder(data.getOrder());
-        if (orderInTable.isPresent() && data.getOrder() != null) {
-            this.columnRepository.reorderColumns(data.getOrder());
+    public void reorderColumns(Byte order) {
+        if (order != null) {
+            Optional<ColumnEntity> orderInTable = this.columnRepository.findByColumnOrder(order);
+            if (orderInTable.isPresent()) {
+                this.columnRepository.reorderColumns(order);
+            }
         }
+    }
+
+    public void execute(String token, ColumnCreateUpdateRequestDTO data) {
+        UUID id = this.getUserIdFromJWToken.get(token);
+
+        TeamEntity teamEntity = addMemberUseCase.teamExists(data.getTeamId());
+        this.userExists(id);
+        this.reorderColumns(data.getOrder());
 
         byte length = (byte) this.columnRepository.findAll().toArray().length;
         ColumnEntity column = ColumnEntity.builder()

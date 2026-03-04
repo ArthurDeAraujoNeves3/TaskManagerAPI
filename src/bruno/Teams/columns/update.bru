@@ -1,20 +1,20 @@
 meta {
-  name: create
+  name: update
   type: http
-  seq: 1
+  seq: 2
 }
 
-post {
-  url: {{BASE_URL}}/columns/create
+put {
+  url: {{BASE_URL}}/columns/update/fdc90c1e-df4a-4f6a-88c6-34680d7d1c70
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "name": "TESTE",
+    "name": "Review",
     "teamId": "471111ff-d4f6-46dc-aced-584a1d451180",
-    "order": 4
+    "order": 2
   }
 }
 
