@@ -12,7 +12,6 @@ import com.arthurneves.TaskManager.utils.GetUserIdFromJWToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,7 +40,7 @@ public class CreateTeamColumnUseCase {
         ColumnEntity column = ColumnEntity.builder()
                 .name(data.getName())
                 .teamId(teamEntity.getId())
-                .order(data.getOrder() != null ? data.getOrder() : length)
+                .columnOrder(data.getOrder() != null ? data.getOrder() : length)
                 .build();
 
         this.columnRepository.save(column);

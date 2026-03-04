@@ -17,7 +17,7 @@ public class ColumnController {
     public ResponseEntity<Object> createColumnInTeam(@RequestHeader("Authorization") String token, @Valid @RequestBody ColumnCreateRequestDTO data) {
         try {
             this.createTeamColumnUseCase.execute(token, data);
-            return ResponseEntity.ok().body("");
+            return ResponseEntity.ok().body(String.format("Coluna %s criada com sucesso", data.getName()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

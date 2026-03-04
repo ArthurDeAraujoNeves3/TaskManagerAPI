@@ -1,5 +1,6 @@
 package com.arthurneves.TaskManager.modules.teams.repositories;
 
+import com.arthurneves.TaskManager.modules.teams.TeamColumnEntity;
 import com.arthurneves.TaskManager.modules.teams.entities.ColumnEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
