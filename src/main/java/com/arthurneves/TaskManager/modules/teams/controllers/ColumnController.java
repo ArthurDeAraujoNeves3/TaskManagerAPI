@@ -37,4 +37,13 @@ public class ColumnController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteColumnInTeam(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok().body(String.format("Coluna %s deletada com sucesso"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
