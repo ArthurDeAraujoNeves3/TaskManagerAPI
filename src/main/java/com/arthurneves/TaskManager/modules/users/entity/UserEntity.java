@@ -1,5 +1,6 @@
 package com.arthurneves.TaskManager.modules.users.entity;
 
+import com.arthurneves.TaskManager.modules.tasks.entities.TaskEntity;
 import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,12 +41,12 @@ public class UserEntity {
     @Length(min = 10, max = 72)
     private String password;
 
-    @ManyToMany(mappedBy = "members")
-    @JsonBackReference
-    private List<TeamEntity> teams;
-
     @CreationTimestamp
     private LocalDateTime create_at;
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    @OneToMany(mappedBy = "members")
+    @JsonBackReference
+    private List<TaskEntity> tasks;
 }

@@ -31,7 +31,7 @@ public class CommentEntity {
     private String comment;
 
     private UUID authorId;
-    private UUID teamId;
+    private UUID taskId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -43,6 +43,6 @@ public class CommentEntity {
     private UserEntity author;
 
     @ManyToOne
-    @JoinColumn(name = "teamId", insertable = false, updatable = false)
-    private TeamEntity team;
+    @JoinColumn(name = "taskId", insertable = false, updatable = false)
+    private TaskEntity task;
 }
