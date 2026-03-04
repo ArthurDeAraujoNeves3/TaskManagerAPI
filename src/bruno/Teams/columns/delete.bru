@@ -1,0 +1,22 @@
+meta {
+  name: delete
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{BASE_URL}}/columns/delete/7764d1ce-fbd7-4120-9dbc-c14ae80bf9a0
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "teamId": "e408da37-8998-40dc-b245-dbf57839047b"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

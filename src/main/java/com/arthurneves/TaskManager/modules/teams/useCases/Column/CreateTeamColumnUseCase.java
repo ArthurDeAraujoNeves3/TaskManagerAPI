@@ -1,5 +1,6 @@
 package com.arthurneves.TaskManager.modules.teams.useCases.Column;
 
+import com.arthurneves.TaskManager.exceptions.UserIsNotOnTeam;
 import com.arthurneves.TaskManager.exceptions.UserNotFound;
 import com.arthurneves.TaskManager.modules.teams.dto.ColumnCreateUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.ColumnEntity;
@@ -28,10 +29,18 @@ public class CreateTeamColumnUseCase {
     @Autowired
     private GetUserIdFromJWToken getUserIdFromJWToken;
 
-    public void userExists(UUID id) {
+    public UserEntity userExists(UUID id) {
         Optional<UserEntity> user = this.userRepository.findById(id);
         if (user.isEmpty()) {
             throw new UserNotFound();
+        }
+
+        return user.get();
+    }
+
+    public void userIsOnTheTeam(TeamEntity teamEntity, UserEntity userEntity) {
+        if (!teamEntity.getOwnerId().equals(userEntity.getId()) && !teamEntity.getMembers().contains(userEntity)) {
+            throw new UserIsNotOnTeam();
         }
     }
 
@@ -48,8 +57,9 @@ public class CreateTeamColumnUseCase {
         UUID id = this.getUserIdFromJWToken.get(token);
 
         TeamEntity teamEntity = addMemberUseCase.teamExists(data.getTeamId());
-        this.userExists(id);
+        UserEntity userEntity = this.userExists(id);
         this.reorderColumns(data.getOrder());
+        this.userIsOnTheTeam(teamEntity, userEntity);
 
         byte length = (byte) this.columnRepository.findAll().toArray().length;
         ColumnEntity column = ColumnEntity.builder()

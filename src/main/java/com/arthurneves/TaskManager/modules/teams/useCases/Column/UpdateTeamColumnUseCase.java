@@ -3,8 +3,10 @@ package com.arthurneves.TaskManager.modules.teams.useCases.Column;
 import com.arthurneves.TaskManager.exceptions.ColumnNotFound;
 import com.arthurneves.TaskManager.modules.teams.dto.ColumnCreateUpdateRequestDTO;
 import com.arthurneves.TaskManager.modules.teams.entities.ColumnEntity;
+import com.arthurneves.TaskManager.modules.teams.entities.TeamEntity;
 import com.arthurneves.TaskManager.modules.teams.repositories.ColumnRepository;
 import com.arthurneves.TaskManager.modules.teams.useCases.AddMemberUseCase;
+import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
 import com.arthurneves.TaskManager.utils.GetUserIdFromJWToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +30,12 @@ public class UpdateTeamColumnUseCase {
 
         Optional<ColumnEntity> column = this.columnRepository.findById(columnId);
         if (column.isEmpty()) {
-            throw new ColumnNotFound(data.getName());
+            throw new ColumnNotFound();
         }
 
-        this.addMemberUseCase.teamExists(data.getTeamId());
-        this.createTeamColumnUseCase.userExists(id);
+        TeamEntity teamEntity = this.addMemberUseCase.teamExists(data.getTeamId());
+        UserEntity userEntity = this.createTeamColumnUseCase.userExists(id);
+        this.createTeamColumnUseCase.userIsOnTheTeam(teamEntity, userEntity);
         this.createTeamColumnUseCase.reorderColumns(data.getOrder());
 
         ColumnEntity columnEntity = column.get();
