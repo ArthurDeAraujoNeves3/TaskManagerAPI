@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@Entity(name = "Columns")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Columns")
 public class ColumnEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,7 +27,6 @@ public class ColumnEntity {
     private String name;
     private UUID teamId;
 
-    @NotBlank
     private Byte order;
 
     @CreationTimestamp

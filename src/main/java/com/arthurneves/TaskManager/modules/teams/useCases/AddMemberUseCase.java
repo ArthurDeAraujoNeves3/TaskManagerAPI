@@ -25,7 +25,7 @@ public class AddMemberUseCase {
     @Autowired
     private JWTProvider jwtProvider;
 
-    protected TeamEntity teamExists(UUID teamId) {
+    public TeamEntity teamExists(UUID teamId) {
         Optional<TeamEntity> team = this.teamRepository.findById(teamId);
         if (team.isEmpty()) {
             throw new TeamNotFound();
@@ -34,7 +34,7 @@ public class AddMemberUseCase {
         return team.get();
     }
 
-    protected UserEntity userExists(String email) {
+    public UserEntity userExists(String email) {
         Optional<UserEntity> user = this.userRepository.findByEmail(email);
         if (user.isEmpty()) {
             throw new UserNotFound();
@@ -43,7 +43,7 @@ public class AddMemberUseCase {
         return user.get();
     }
 
-    protected void userIsTheOwner(TeamEntity team, UUID userId) {
+    public void userIsTheOwner(TeamEntity team, UUID userId) {
         if (!team.getOwnerId().equals(userId)) {
             throw new NotTeamOwner();
         }
