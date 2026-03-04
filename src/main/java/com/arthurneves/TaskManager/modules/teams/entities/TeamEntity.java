@@ -1,6 +1,5 @@
 package com.arthurneves.TaskManager.modules.teams.entities;
 
-import com.arthurneves.TaskManager.modules.teams.TeamColumnEntity;
 import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -39,7 +38,7 @@ public class TeamEntity {
     private UserEntity owner;
 
     @OneToMany(mappedBy = "team")
-    private List<TeamColumnEntity> columns;
+    private List<ColumnEntity> columns;
 
     @ManyToMany()
     @JoinTable(

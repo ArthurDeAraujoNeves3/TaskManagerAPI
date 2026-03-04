@@ -9,6 +9,7 @@ import com.arthurneves.TaskManager.modules.teams.useCases.AddMemberUseCase;
 import com.arthurneves.TaskManager.modules.users.entity.UserEntity;
 import com.arthurneves.TaskManager.modules.users.repositories.UserRepository;
 import com.arthurneves.TaskManager.utils.GetUserIdFromJWToken;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class CreateTeamColumnUseCase {
     @Autowired
     private ColumnRepository columnRepository;
@@ -32,8 +34,13 @@ public class CreateTeamColumnUseCase {
         TeamEntity teamEntity = addMemberUseCase.teamExists(data.getTeamId());
         Optional<UserEntity> user = this.userRepository.findById(id);
 
-        if ( user.isEmpty() ) {
+        if (user.isEmpty()) {
             throw new UserNotFound();
+        }
+
+        Optional<ColumnEntity> orderInTable = this.columnRepository.findByColumnOrder(data.getOrder());
+        if (orderInTable.isPresent() && data.getOrder() != null) {
+            this.columnRepository.reorderColumns(data.getOrder());
         }
 
         byte length = (byte) this.columnRepository.findAll().toArray().length;
