@@ -1,0 +1,24 @@
+meta {
+  name: create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/columns/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "teste",
+    "teamId": "e408da37-8998-40dc-b245-dbf57839047b",
+    "order": 4
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
