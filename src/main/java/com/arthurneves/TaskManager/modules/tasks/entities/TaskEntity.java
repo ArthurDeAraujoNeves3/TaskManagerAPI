@@ -33,14 +33,12 @@ public class TaskEntity {
     @Max(500)
     private String description;
     private Boolean concluded;
+    private UUID columnId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "team")
-    private List<CommentEntity> comments;
 
     // Integrantes
     @ManyToMany()

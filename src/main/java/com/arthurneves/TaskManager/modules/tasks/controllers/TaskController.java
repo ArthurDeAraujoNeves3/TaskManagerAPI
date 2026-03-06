@@ -1,6 +1,7 @@
 package com.arthurneves.TaskManager.modules.tasks.controllers;
 
 import com.arthurneves.TaskManager.modules.tasks.dto.CreateTaskRequestDTO;
+import com.arthurneves.TaskManager.modules.tasks.entities.TaskEntity;
 import com.arthurneves.TaskManager.modules.tasks.useCases.CreateTaskUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("tasks")
+@RequestMapping("/tasks")
 public class TaskController {
     @Autowired
     private CreateTaskUseCase createTaskUseCase;
@@ -16,8 +17,8 @@ public class TaskController {
     @PostMapping("/create")
     public ResponseEntity<Object> createTaskInColumn(@RequestHeader("Authorization") String token, @Valid @RequestBody CreateTaskRequestDTO data) {
         try {
-            this.createTaskUseCase.execute(token, data);
-            return ResponseEntity.ok().body("");
+            TaskEntity task = this.createTaskUseCase.execute(token, data);
+            return ResponseEntity.ok().body(task);
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
